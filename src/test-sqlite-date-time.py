@@ -58,8 +58,8 @@ class TestSQLiteDateTime(unittest.TestCase):
 
     def test_to_iso_native(self):
         actual = SQLiteDateTime('2000-01-01 00:00:00').to_iso()
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
-            self.assertEqual('1999-12-31T15:00:00+00:00', actual)
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+            self.assertEqual('2000-01-01T00:00:00+00:00', actual)
     def test_to_iso_utc_z(self):
         actual = SQLiteDateTime('2000-01-01T00:00:00Z').to_iso()
         self.assertEqual('2000-01-01T00:00:00+00:00', actual)
@@ -72,8 +72,8 @@ class TestSQLiteDateTime(unittest.TestCase):
 
     def test_to_isoz_native(self):
         actual = SQLiteDateTime('2000-01-01 00:00:00').to_isoz()
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
-            self.assertEqual('1999-12-31T15:00:00Z', actual)
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+            self.assertEqual('2000-01-01T00:00:00Z', actual)
     def test_to_isoz_utc_z(self):
         actual = SQLiteDateTime('2000-01-01T00:00:00Z').to_isoz()
         self.assertEqual('2000-01-01T00:00:00Z', actual)
@@ -86,8 +86,8 @@ class TestSQLiteDateTime(unittest.TestCase):
 
     def test_to_sqlite_native(self):
         actual = SQLiteDateTime('2000-01-01 00:00:00').to_sqlite()
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
-            self.assertEqual('1999-12-31 15:00:00', actual)
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+            self.assertEqual('2000-01-01 00:00:00', actual)
     def test_to_sqlite_utc_z(self):
         actual = SQLiteDateTime('2000-01-01T00:00:00Z').to_sqlite()
         self.assertEqual('2000-01-01 00:00:00', actual)
@@ -100,7 +100,7 @@ class TestSQLiteDateTime(unittest.TestCase):
     
     def test_to_local(self):
         actual = SQLiteDateTime('2000-01-01T00:00:00').to_local()
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual('2000-01-01T09:00:00+0900', f'{actual:%Y-%m-%dT%H:%M:%S%z}')
             self.assertEqual(datetime.timezone(datetime.timedelta(seconds=32400)), actual.tzinfo)
     def test_to_tz_timedelta(self):

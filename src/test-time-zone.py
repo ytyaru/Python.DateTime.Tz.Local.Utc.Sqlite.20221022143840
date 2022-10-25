@@ -8,20 +8,20 @@ class TestTimeZone(unittest.TestCase):
     def setUp(self): pass
     def tearDown(self): pass
     def test_local(self):
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(datetime.timezone(datetime.timedelta(seconds=32400)), TimeZone.local())
 
     def test_sec_default(self):
         actual = TimeZone.sec()
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(32400, actual)
     def test_sec_none(self):
         actual = TimeZone.sec(None)
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(32400, actual)
     def test_sec_iso_native(self):
         actual = TimeZone.sec(datetime.datetime.fromisoformat('2000-01-01T00:00:00'))
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(32400, actual)
     def test_sec_iso_utc(self):
         actual = TimeZone.sec(datetime.datetime.fromisoformat('2000-01-01T00:00:00+00:00'))
@@ -38,15 +38,15 @@ class TestTimeZone(unittest.TestCase):
 
     def test_iso_default(self):
         actual = TimeZone.iso()
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual('+09:00', actual)
     def test_iso_none(self):
         actual = TimeZone.iso(None)
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual('+09:00', actual)
     def test_iso_iso_native(self):
         actual = TimeZone.iso(datetime.datetime.fromisoformat('2000-01-01T00:00:00'))
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual('+09:00', actual)
     def test_iso_iso_utc(self):
         actual = TimeZone.iso(datetime.datetime.fromisoformat('2000-01-01T00:00:00+00:00'))

@@ -51,15 +51,15 @@ class TestAwareDateTime(unittest.TestCase):
         self.assertEqual(1999, actual.year)
     def test_to_local_utc(self):
         actual = AwareDateTime.to_local(datetime.datetime.fromisoformat('2000-01-01T00:00:00+00:00'))
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(datetime.timezone(datetime.timedelta(seconds=32400)), actual.tzinfo)
     def test_to_local_tokyo(self):
         actual = AwareDateTime.to_local(datetime.datetime.fromisoformat('2000-01-01T00:00:00+09:00'))
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(datetime.timezone(datetime.timedelta(seconds=32400)), actual.tzinfo)
     def test_to_local_native(self):
         actual = AwareDateTime.to_local(datetime.datetime.fromisoformat('2000-01-01T00:00:00'))
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(datetime.timezone(datetime.timedelta(seconds=32400)), actual.tzinfo)
     def test_to_tz_tokyo_utc(self):
         actual = AwareDateTime.to_tz(
@@ -90,19 +90,19 @@ class TestAwareDateTime(unittest.TestCase):
         actual = AwareDateTime.to_tz(
             datetime.datetime.fromisoformat('2000-01-01T00:00:00+00:00'), 
             None)
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(datetime.timezone(datetime.timedelta(seconds=32400)), actual.tzinfo)
             self.assertEqual("2000-01-01T09:00:00+0900", f"{actual:%Y-%m-%dT%H:%M:%S%z}")
     def test_to_tz_native_tokyo_timedelta(self):
         actual = AwareDateTime.to_tz(
             datetime.datetime.fromisoformat('2000-01-01T00:00:00'), 
             datetime.timezone(datetime.timedelta(seconds=32400)))
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             #self.assertEqual(datetime.timedelta(seconds=32400), actual.tzinfo)
             self.assertEqual(datetime.timezone(datetime.timedelta(seconds=32400), 'JST'), actual.tzinfo)
             self.assertEqual(datetime.timezone, type(actual.tzinfo))
             self.assertEqual(32400, actual.tzinfo.utcoffset(actual).seconds)
-            self.assertEqual("2000-01-01T09:00:00+0900", f"{actual:%Y-%m-%dT%H:%M:%S%z}")
+            self.assertEqual("2000-01-01T00:00:00+0900", f"{actual:%Y-%m-%dT%H:%M:%S%z}")
     def test_to_tz_native_tokyo_zoneinfo(self):
         actual = AwareDateTime.to_tz(
             datetime.datetime.fromisoformat('2000-01-01T00:00:00+00:00'), 
@@ -137,15 +137,15 @@ class TestAwareDateTime(unittest.TestCase):
 
     """
     def test_local_tz(self):
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(datetime.timezone(datetime.timedelta(seconds=32400)), AwareDateTime.local_tz())
     def test_tz_sec_default(self):
         actual = AwareDateTime.tz_sec()
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(32400, actual)
     def test_tz_sec_none(self):
         actual = AwareDateTime.tz_sec(None)
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(32400, actual)
     def test_tz_sec_timezone(self):
         actual = AwareDateTime.tz_sec(datetime.timezone(datetime.timedelta(seconds=16200)))
@@ -155,7 +155,7 @@ class TestAwareDateTime(unittest.TestCase):
         self.assertEqual(0, actual)
     def test_tz_sec_native(self):
         actual = AwareDateTime.tz_sec(datetime.datetime.fromisoformat('2000-01-01T00:00:00'))
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual(32400, actual)
     def test_tz_sec_tokyo(self):
         actual = AwareDateTime.tz_sec(datetime.datetime.fromisoformat('2000-01-01T00:00:00+09:00'))
@@ -165,7 +165,7 @@ class TestAwareDateTime(unittest.TestCase):
         self.assertEqual('+00:00', actual)
     def test_tz_iso_native(self):
         actual = AwareDateTime.tz_iso(datetime.datetime.fromisoformat('2000-01-01T00:00:00'))
-        if datetime.datetime.now().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
+        if datetime.datetime.now().astimezone().tzinfo == datetime.timezone(datetime.timedelta(seconds=32400)):
             self.assertEqual('+09:00', actual)
     def test_tz_iso_tokyo(self):
         actual = AwareDateTime.tz_iso(datetime.datetime.fromisoformat('2000-01-01T00:00:00+09:00'))
