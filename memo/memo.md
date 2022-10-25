@@ -1,6 +1,6 @@
 指定したタイムゾーンの日付型を作るクラス。
 
-　UTC, ローカル, 指定タイムゾーン用クラス。さらにSQLite3(UTCでyyyy-MM-dd HH:mm:ss形式)も作った。
+　UTC, ローカル, 指定タイムゾーン用クラス。さらにSQLite3(UTC標準時で`yyyy-MM-dd HH:mm:ss`形式)も作った。
 
 <!-- more -->
 
